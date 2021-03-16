@@ -29,14 +29,19 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Default } from "@components/layout";
 import { NextSeo } from "next-seo";
 import { fetchGraphQL } from "@lib/api";
+import { useRouter } from "next/router";
+import ErrorPage from "next/error"
 
 function addToBag(productId: string) {
   const bag = JSON.parse(localStorage.getItem("bag")) || [];
-  console.log(bag);
   localStorage.setItem("bag", JSON.stringify([productId, ...bag]));
 }
 
 export const Product = ({ product }) => {
+  const { isFallback } = useRouter()
+
+  if (isFallback) return <ErrorPage statusCode={404} />
+
   return (
     <>
       <NextSeo title="Produkte" />
