@@ -25,3 +25,7 @@ Alternativ kann das Projekt in [GitPod](https://gitpod.io/#https://github.com/kl
 ## Präsentation
 
 [Öffnen](https://cdn.discordapp.com/attachments/694541739293147347/830193837359497226/Protokoll.xlsx)
+
+## Design
+
+[Öffnen](https://www.figma.com/file/C5x4pQRp0PpdSZB2laU62i/Untitled?node-id=6%3A2)
