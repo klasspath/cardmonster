@@ -17,3 +17,7 @@ Alternativ kann das Projekt in [GitPod](https://gitpod.io/#https://github.com/kl
 2. In Projektordner begeben
 3. Ausführen: `npm install` oder `yarn install`
 4. Ausführen: `npm run dev` oder `yarn dev`
+
+## Protokoll
+
+[Öffnen](https://cdn.discordapp.com/attachments/694541739293147347/830193837359497226/Protokoll.xlsx)
