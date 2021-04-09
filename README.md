@@ -9,6 +9,7 @@ Basierend auf [Node.js](https://nodejs.org/en/) and [Next.js](https://nextjs.org
 ## Setup
 
 Der Quellcode muss heruntergeladen werden. Dafür kann entweder [Git](https://git-scm.com/downloads) verwendet werden, oder der direkte [Zip-Download](https://github.com/klasspath/cardmonster/archive/refs/heads/main.zip) des Quellcodes.
+Alternativ kann das Projekt in [GitPod](https://gitpod.io/#https://github.com/klasspath/cardmonster) geöffnet und ohne Installation der Abhängigkeiten direkt bearbeitet und ausgeführt werden.
 
 ## Programm starten
 
