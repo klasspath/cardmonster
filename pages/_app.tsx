@@ -2,12 +2,14 @@ import { FC } from "react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { ChakraProvider } from "@chakra-ui/react";
-import { Head } from "@components/core";
+import { Head, GlobalProvider } from "@components/core";
 
 import { GraphQLClient, ClientContext } from "graphql-hooks";
+import theme from "@styles/theme";
+import "typeface-inter";
 
 const client = new GraphQLClient({
-  url: process.env.API_URL,
+  url: process.env.API_URL || "",
 });
 
 const Noop: FC = ({ children }) => <>{children}</>;
@@ -19,11 +21,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head />
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <ClientContext.Provider value={client}>
-          <Layout>
-            <Component {...pageProps} key={router.route} />
-          </Layout>
+          <GlobalProvider>
+            <Layout>
+              <Component {...pageProps} key={router.route} />
+            </Layout>
+          </GlobalProvider>
         </ClientContext.Provider>
       </ChakraProvider>
     </>

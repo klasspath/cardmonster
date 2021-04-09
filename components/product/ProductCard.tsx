@@ -1,8 +1,19 @@
-import { AspectRatio, Box, Heading, VStack, Text } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Box,
+  Heading,
+  VStack,
+  Text,
+  Link as StyledLink,
+  Flex,
+  Button,
+  Square,
+} from "@chakra-ui/react";
 import { FC } from "react";
 import Image from "next/image";
 import { MotionBox } from "@components/motion";
 import Link from "next/link";
+import { HeartIcon } from "@components/icons";
 
 interface ProductCardProps {
   id: string;
@@ -15,33 +26,26 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   const { id, title, imageUrl, price } = props;
 
   return (
-    <Link href={`/product/${id}`}>
-      <MotionBox whileHover={{ scale: 1.025 }} _hover={{ cursor: "pointer" }}>
-        <AspectRatio ratio={1 / 1}>
-          <Box>
-            <Box bg="black" pos="absolute" w="full" h="full" opacity="0.05" />
-            <Box pos="relative" w="full" h="full">
-              <Image
-                src={imageUrl}
-                objectFit="cover"
-                sizes="200"
-                quality={25}
-                layout="fill"
-              />
-            </Box>
-            <Box pos="absolute" left={0} top={0}>
-              <Box>
-                <Box bg="gray.50" maxW="75%" p={4}>
-                  <Heading size="sm">{title}</Heading>
-                </Box>
-                <Box bg="gray.50" p={4} d="inline-block">
-                  <Text>{price} EUR</Text>
-                </Box>
-              </Box>
-            </Box>
+    <Link href={`/product/${id}`} passHref>
+      <StyledLink overflow="hidden" pos="relative" w="full" h="full">
+        <Box pos="absolute" top={0} left={0} right={0} bottom={0} bg="purple.500" />
+        <Box opacity="0.8">
+          <Image src={imageUrl} width={540} height={540} layout="responsive" quality={50}></Image>
+        </Box>
+        <Flex justify="space-between" w="full" pos="absolute" top={0}>
+          <Box pr={5}>
+            <Heading size="md" p={5} bg="white">
+              {title}
+            </Heading>
+            <Text as="span" p={5} bg="white" fontWeight="bold">
+              {price} EUR
+            </Text>
           </Box>
-        </AspectRatio>
-      </MotionBox>
+          <Square bg="white" size={10}>
+            <HeartIcon />
+          </Square>
+        </Flex>
+      </StyledLink>
     </Link>
   );
 };

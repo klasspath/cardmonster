@@ -12,12 +12,17 @@ import {
   Box,
   Square,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useLocalStorage } from "@lib/storage";
 import { FC, useEffect, useState } from "react";
 import useSWR from "swr";
 import { useQuery } from "graphql-hooks";
+import { useGlobalState } from "@components/core";
+
+import axios from "axios";
+import Link from "next/link";
 
 const query = `
 query GetBagItems($productIds: [ID!]) {
@@ -32,25 +37,12 @@ query GetBagItems($productIds: [ID!]) {
 }
 `;
 
-const useBag = () => {
-  const [value, setValue] = useState(
-    JSON.parse(localStorage.getItem("bag") || "[]")
-  );
-
-  useEffect(() => {
-    localStorage.setItem("bag", JSON.stringify(value));
-  }, [value]);
-
-  return [value, setValue];
-};
-
-const Bag: FC<any> = (props) => {
-  const { isOpen, onClose, onOpen } = props;
-  const [productIds, setProductIds] = useLocalStorage("bag", ["testchen"]);
-  const { data, error } = useQuery(query, { variables: { productIds } });
+const Bag: FC = () => {
+  const { displaySidebar, closeSidebar } = useGlobalState();
+  const { cartItems: items } = useGlobalState()
 
   return (
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
+    <Drawer isOpen={displaySidebar} placement="right" onClose={closeSidebar} size="md">
       <DrawerOverlay>
         <DrawerContent>
           <DrawerCloseButton />
@@ -58,37 +50,23 @@ const Bag: FC<any> = (props) => {
 
           <DrawerBody>
             <VStack spacing={5}>
-              {data &&
-                data.products.map((product) => (
-                  <Stack
-                    key={product.id}
-                    direction="row"
-                    spacing={5}
-                    align="center"
-                  >
-                    <Square size={20} pos="relative">
-                      <Image
-                        src={product.image[0].url}
-                        layout="fill"
-                        objectFit="cover"
-                        sizes="100"
-                        quality={25}
-                      />
-                    </Square>
-                    <Heading size="sm">
-                      {product.title} {product.image.url}
-                    </Heading>
-                  </Stack>
-                ))}
+              {items.map((item, i) => (
+                <Stack direction="row" justify="space-between" align="center" w="full" key={i}>
+                  <Text>{item.productId}</Text>
+                  <Text>{item.count}</Text>
+                </Stack>
+              ))}
             </VStack>
           </DrawerBody>
 
           <DrawerFooter>
             <VStack w="full">
               <Box></Box>
-              <Button color="purple" isFullWidth size="lg">
-                Zum Bezahlvorgang
-              </Button>
+              <Link href="/checkout" passHref>
+                <Button colorScheme="purple" isFullWidth size="lg" as="a">
+                  Zum Bezahlvorgang
+                </Button>
+              </Link>
             </VStack>
           </DrawerFooter>
         </DrawerContent>

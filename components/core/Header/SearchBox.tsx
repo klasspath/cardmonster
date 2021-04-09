@@ -10,18 +10,17 @@ const SearchBox: FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box maxW="400px">
-        <FormControl id="email">
-          <Input
-            type="text"
-            variant="filled"
-            placeholder="Nach Produkten suchen..."
-            w="500px"
-            rounded="none"
-            ref={register}
-            name="term"
-          />
-        </FormControl>
+      <Box width="full">
+        <Input
+          type="text"
+          variant="filled"
+          placeholder="Nach Produkten suchen..."
+          rounded="none"
+          ref={register}
+          name="term"
+          size="md"
+          width="full"
+        />
       </Box>
     </form>
   );

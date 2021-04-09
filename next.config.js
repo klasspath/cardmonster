@@ -8,5 +8,14 @@ module.exports = {
   },
   env: {
     API_URL: process.env.API_URL,
+    PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
+  },
+  rewrites() {
+    return [
+      {
+        source: "/search/:category",
+        destination: "/search",
+      },
+    ];
   },
 };

@@ -10,12 +10,7 @@ const BagIcon: FC<IconProps> = (props) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M1 5H19"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M1 5H19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path
         d="M14 9C14 10.0609 13.5786 11.0783 12.8284 11.8284C12.0783 12.5786 11.0609 13 10 13C8.93913 13 7.92172 12.5786 7.17157 11.8284C6.42143 11.0783 6 10.0609 6 9"
         strokeWidth="1.5"

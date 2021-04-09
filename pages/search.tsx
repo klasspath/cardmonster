@@ -6,34 +6,39 @@ import {
   Heading,
   SimpleGrid,
   Text,
+  Link as StyledLink,
+  Wrap,
 } from "@chakra-ui/react";
 import { Default } from "@components/layout";
 import { ProductCard } from "@components/product";
 import { useQuery } from "graphql-hooks";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const allQuery = `
-  query GetAllProducts {
-    products {
+  query GetProductsByCategory($orderBy: ProductOrderByInput = releaseDate_DESC) {
+    products(orderBy: $orderBy) {
       id
       title
       price
       image {
-        url
+      url
       }
+      releaseDate
     }
   }
 `;
 
 const categoriesQuery = `
-  query GetProductsByCategory($category: ID) {
-    products(where: { categories_some: { id: $category } }) {
+  query GetProductsByCategory($category: ID, $orderBy: ProductOrderByInput = price_DESC) {
+    products(where: {categories_some: {id: $category}}, orderBy: $orderBy) {
       id
       title
       price
       image {
-        url
+      url
       }
+      releaseDate
     }
   }
 `;
@@ -51,21 +56,24 @@ const searchQuery = `
   }
 `;
 
+const qs = (params: Record<string, unknown>) =>
+  Object.keys(params)
+    .filter((key) => params[key])
+    .map((key) => `${key}=${params[key]}`)
+    .join("&");
+
 const SearchPage = () => {
-  const router = useRouter();
-  const { loading, error, data } = useQuery(
-    router.query.q
-      ? searchQuery
-      : router.query.category
-        ? categoriesQuery
-        : allQuery,
-    {
-      variables: {
-        category: router.query.category,
-        term: router.query.q,
-      },
-    }
-  );
+  const { query } = useRouter();
+  const { sort, q, category } = query;
+
+  const dataQ = q ? searchQuery : category ? categoriesQuery : allQuery;
+  const { data } = useQuery(dataQ, {
+    variables: {
+      category,
+      term: q,
+      orderBy: sort,
+    },
+  });
 
   return (
     <Box mt={2}>
@@ -97,7 +105,20 @@ const SearchPage = () => {
           </GridItem>
           <GridItem colSpan={2}>
             <Box p={4}>
-              <Heading size="md">Sortieren</Heading>
+              <Heading size="md" mb={5}>
+                Sortieren
+              </Heading>
+              <Wrap>
+                <Link href={`/search?${qs({ sort: "releaseDate_DESC", category })}`} passHref>
+                  <StyledLink>Erscheinungsdatum</StyledLink>
+                </Link>
+                <Link href={`/search?${qs({ sort: "price_DESC", category })}`} passHref>
+                  <StyledLink>Preis absteigend</StyledLink>
+                </Link>
+                <Link href={`/search?${qs({ sort: "price_ASC", category })}`} passHref>
+                  <StyledLink>Preis aufsteigend</StyledLink>
+                </Link>
+              </Wrap>
             </Box>
           </GridItem>
         </Grid>

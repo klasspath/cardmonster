@@ -21,12 +21,8 @@ const Navigation: FC = () => {
     return (
       <Stack direction="row" spacing={5}>
         {data.categories.map((category) => (
-          <Link
-            passHref
-            href={`/search?category=${category.id}`}
-            key={category.id}
-          >
-            <ChakraLink fontWeight="bold" color="gray.500">
+          <Link passHref href={`/search?category=${category.id}`} key={category.id}>
+            <ChakraLink fontWeight="bold" color="black">
               {category.title}
             </ChakraLink>
           </Link>

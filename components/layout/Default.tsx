@@ -1,29 +1,38 @@
 import { FC } from "react";
-import { Header, Footer } from "@components/core";
+import { Header, useGlobalState, Footer } from "@components/core";
+import { LoginView, SignupView } from "@components/auth";
 import {
   Box,
-  useColorModeValue,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  Heading,
+  Modal,
+  ModalOverlay,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  ModalContent,
   Button,
 } from "@chakra-ui/react";
 import { Bag } from "@components/core";
 
 const Layout: FC = ({ children }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { displayModal, closeModal, modalView } = useGlobalState();
 
   return (
     <>
-      <Header onOpenBag={onOpen} />
+      <Header />
       <Box as="main">{children}</Box>
-      <Bag isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <Bag />
+      <Modal isOpen={displayModal} onClose={closeModal} motionPreset="none" isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            {modalView === "LOGIN" && <LoginView />}
+            {modalView === "SIGNUP" && <SignupView />}
+            {modalView === "FORGOT" && <LoginView />}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       {/* <Footer /> */}
     </>
   );

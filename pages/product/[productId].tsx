@@ -24,29 +24,72 @@ import {
   Tbody,
   Td,
   Stack,
+  useRadio,
+  useRadioGroup,
+  Wrap,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Default } from "@components/layout";
 import { NextSeo } from "next-seo";
 import { fetchGraphQL } from "@lib/api";
 import { useRouter } from "next/router";
-import ErrorPage from "next/error"
+import ErrorPage from "next/error";
+import { useGlobalState } from "@components/core";
+import { useState } from "react";
 
-function addToBag(productId: string) {
-  const bag = JSON.parse(localStorage.getItem("bag")) || [];
-  localStorage.setItem("bag", JSON.stringify([productId, ...bag]));
+function RadioCard(props) {
+  const { getInputProps, getCheckboxProps } = useRadio(props)
+
+  const input = getInputProps()
+  const checkbox = getCheckboxProps()
+
+  return (
+    <Box as="label">
+      <input {...input} />
+      <Box
+        {...checkbox}
+        cursor="pointer"
+        borderWidth="1px"
+        borderColor="purple.500"
+        rounded="full"
+        _checked={{
+          bg: "purple.500",
+          color: "white",
+        }}
+        _focus={{
+          boxShadow: "outline",
+        }}
+        px={5}
+        py={3}
+      >
+        {props.children}
+      </Box>
+    </Box>
+  )
 }
 
 export const Product = ({ product }) => {
-  const { isFallback } = useRouter()
+  const { isFallback } = useRouter();
+  const { openSidebar, addCartItem } = useGlobalState();
 
-  if (isFallback) return <ErrorPage statusCode={404} />
+  if (isFallback) return <ErrorPage statusCode={404} />;
+
+  let options = [1, 2, 3, 4, 5].map((_, i) => i + 1);
+
+  const [count, setCount] = useState(0)
+
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: "count",
+    onChange: (val) => setCount(Number.parseInt(val))
+  })
+
+  const group = getRootProps()
 
   return (
     <>
       <NextSeo title="Produkte" />
       <Container maxW="7xl">
-        <Grid templateColumns="repeat(2, 1fr)" gap={6} alignItems="center">
+        <Grid templateColumns="repeat(2, 1fr)" gap={6} alignItems="center" py="24">
           <GridItem colSpan={1}>
             <AspectRatio ratio={4 / 3}>
               <Image
@@ -59,45 +102,37 @@ export const Product = ({ product }) => {
             </AspectRatio>
           </GridItem>
           <GridItem colSpan={1}>
-            <Box
-              maxW="sm"
-              borderWidth="4px"
-              borderRadius="lg"
-              overflow="hidden"
-              p="4"
-            >
-              <Heading size="xs">Produkt: {product.title}</Heading>
-              <Text fontSize="xl" fontWeight="bold" color="red.500">
-                {product.price}€
+            <Box p="5">
+              <Heading size="lg"> {product.title}</Heading>
+              <Text py="10" fontSize="xl" fontWeight="bold">
+                {product.price}EUR
               </Text>
-              <Text fontSize="xl" fontWeight="bold">
-                Inhalt: {product.contents}
-              </Text>
-              <Text fontSize="sm" p="5">
-                Lieferzeit: 1 bis 3 Werktage
-              </Text>
-              <Text fontSize="sm" color="red.500">
-                Vorrätig???
-              </Text>
-              <Text fontSize="sm">Artikelnummer: {product.id} </Text>
-              <Text fontSize="sm">Kategorien: </Text>
-              <Stack direction="row" spacing={3} pt={2}>
-                <Menu>
-                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                    Anzahl
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem>1</MenuItem>
-                    <MenuItem>2</MenuItem>
-                    <MenuItem>3</MenuItem>
-                    <MenuItem>4</MenuItem>
-                    <MenuItem>5</MenuItem>
-                  </MenuList>
-                </Menu>
-                <Button colorScheme="blue" onClick={() => addToBag(product.id)}>
-                  In Warenkorb
+
+              <Box py="5">
+                <Wrap {...group}>
+                  {options.map((value) => {
+                    const radio = getRadioProps({ value })
+                    return (
+                      <RadioCard key={value} {...radio}>
+                        {value}
+                      </RadioCard>
+                    )
+                  })}
+                </Wrap>
+              </Box>
+              <Box>
+                <Button
+                  colorScheme="purple"
+                  size="lg"
+                  disabled={count == 0}
+                  onClick={() => {
+                    addCartItem(product.id, count)
+                    openSidebar();
+                  }}
+                >
+                  In den Warenkorb
                 </Button>
-              </Stack>
+              </Box>
             </Box>
           </GridItem>
         </Grid>
@@ -114,12 +149,14 @@ export const Product = ({ product }) => {
             <TabPanels>
               <TabPanel>
                 <Text>{product.description}</Text>
+                <Text fontSize="sm">Artikelnummer: {product.id} </Text>
+                <Text fontSize="sm">Kategorien: </Text>
               </TabPanel>
               <TabPanel>
                 <Text>Inhalt: {product.contents}</Text>
               </TabPanel>
               <TabPanel>
-                <Table variant="striped" colorScheme="teal">
+                <Table variant="striped" colorScheme="purple">
                   <Tbody>
                     <Tr>
                       <Td>Lizenz</Td>
@@ -156,15 +193,7 @@ export const Product = ({ product }) => {
 
 const ShowProductPage = ({ product }) => {
   return (
-    <div>
-      <p>
-        <Link href="/search">
-          <a>Zurück zu den Produkten</a>
-        </Link>
-      </p>
-
-      <Product product={product} />
-    </div>
+    <Product product={product} />
   );
 };
 
@@ -188,10 +217,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       releaseDate
       language
       description
+      stock
     }
   }
   `;
-  const { product } = await fetchGraphQL(query, { id: params.productId });
+  const { product } = await fetchGraphQL(query, { id: params?.productId });
 
   return {
     props: {

@@ -1,2 +1,3 @@
 import Default from "./Default";
-export { Default };
+import Checkout from "./Checkout";
+export { Default, Checkout };

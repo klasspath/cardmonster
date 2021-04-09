@@ -4,12 +4,11 @@ import Logo from "../Logo";
 import Navigation from "./Navigation";
 import SearchBox from "./SearchBox";
 import { BagIcon, HeartIcon } from "@components/icons";
+import { useGlobalState } from "@components/core";
 
-interface HeaderProps {
-  onOpenBag: () => void;
-}
+const Header: FC = () => {
+  const { openSidebar, openModal } = useGlobalState();
 
-const Header: FC<HeaderProps> = ({ onOpenBag }) => {
   return (
     <>
       <Box w="full" height="10" bg="purple.700"></Box>
@@ -21,12 +20,11 @@ const Header: FC<HeaderProps> = ({ onOpenBag }) => {
               <Navigation />
             </Stack>
             <SearchBox />
-            <Stack direction="row" align="center" spacing={7}>
+            <Stack direction="row" align="center" spacing={5}>
               <HeartIcon boxSize={6} />
-              <Button variant="unstyled" onClick={onOpenBag}>
+              <Button variant="unstyled" onClick={openSidebar}>
                 <BagIcon boxSize={6} />
               </Button>
-              <Avatar size="sm" />
             </Stack>
           </Stack>
         </Container>
