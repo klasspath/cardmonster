@@ -8,7 +8,7 @@ Basierend auf [Node.js](https://nodejs.org/en/) and [Next.js](https://nextjs.org
 
 ## Setup
 
-Der Quellcode muss heruntergeladen werden. Dafür kann entweder [Git](https://git-scm.com/downloads) verwendet werden, oder der Download-Button der Repository bei GitHub.
+Der Quellcode muss heruntergeladen werden. Dafür kann entweder [Git](https://git-scm.com/downloads) verwendet werden, oder der direkte [Zip-Download](https://github.com/klasspath/cardmonster/archive/refs/heads/main.zip) des Quellcodes.
 
 ## Programm starten
 
