@@ -2,7 +2,7 @@
 
 Basierend auf [Node.js](https://nodejs.org/en/) and [Next.js](https://nextjs.org/)
 
-# Notwendige Software
+## Notwendige Software
 
 * [Node.js](https://nodejs.org/en/)
 
