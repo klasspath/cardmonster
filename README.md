@@ -1,34 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cardmonster.de
 
-## Getting Started
+Basierend auf [Node.js](https://nodejs.org/en/) and [Next.js](https://nextjs.org/)
 
-First, run the development server:
+## Notwendige Software
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+* [Node.js](https://nodejs.org/en/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Der Quellcode muss heruntergeladen werden. Dafür kann entweder [Git](https://git-scm.com/downloads) verwendet werden, oder der direkte [Zip-Download](https://github.com/klasspath/cardmonster/archive/refs/heads/main.zip) des Quellcodes.
+Alternativ kann das Projekt in [GitPod](https://gitpod.io/#https://github.com/klasspath/cardmonster) geöffnet und ohne Installation der Abhängigkeiten direkt bearbeitet und ausgeführt werden.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Programm starten
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+1. Quellcode herunterladen
+2. In Projektordner begeben
+3. Ausführen: `npm install` oder `yarn install`
+4. Ausführen: `npm run dev` oder `yarn dev`
 
-## Learn More
+## Protokoll
 
-To learn more about Next.js, take a look at the following resources:
+[Öffnen](https://cdn.discordapp.com/attachments/694541739293147347/830193837359497226/Protokoll.xlsx)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Präsentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+[Öffnen](https://cdn.discordapp.com/attachments/694541739293147347/830193837359497226/Protokoll.xlsx)
 
-## Deploy on Vercel
+## Design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Öffnen](https://www.figma.com/file/C5x4pQRp0PpdSZB2laU62i/Untitled?node-id=6%3A2)
