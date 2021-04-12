@@ -84,7 +84,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     name: "Glumanda",
     description: "A useless but sweat Pokemon",
     local_price: {
-      amount: order.price,
+      amount: "10.00",
       currency: "EUR",
     },
     pricing_type: "fixed_price",
