@@ -24,7 +24,7 @@ Alternativ kann das Projekt in [GitPod](https://gitpod.io/#https://github.com/kl
 
 ## Präsentation
 
-[Öffnen](https://cdn.discordapp.com/attachments/694541739293147347/830193837359497226/Protokoll.xlsx)
+[Öffnen](https://cdn.discordapp.com/attachments/830869209469812746/830882903260659723/Prasentation.pptx)
 
 ## Design
 
